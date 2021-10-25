@@ -1,17 +1,18 @@
-require("dotenv").config();
+import "./env";
 
-const Koa = require("koa");
-const session = require("koa-session");
-const passport = require("koa-passport");
-const Router = require("@koa/router");
-const prisma = require("./prisma");
-const { isProtected, authRoutes } = require("./auth");
-const bookmarkRoutes = require("./bookmarks");
-const bodyParser = require("koa-bodyparser");
-const errorHandling = require("./errors");
-const logger = require("koa-logger");
-const tagRoutes = require("./tags");
-const profileRoutes = require("./profile");
+import Koa from "koa";
+import session from "koa-session";
+import passport from "koa-passport";
+import Router from "@koa/router";
+import bodyParser from "koa-bodyparser";
+import logger from "koa-logger";
+
+import prisma from "./prisma";
+import { isProtected, authRoutes } from "./auth";
+import bookmarkRoutes from "./bookmarks";
+import errorHandling from "./errors";
+import tagRoutes from "./tags";
+import profileRoutes from "./profile";
 
 const app = new Koa();
 

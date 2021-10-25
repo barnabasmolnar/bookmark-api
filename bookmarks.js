@@ -1,13 +1,14 @@
-const Router = require("@koa/router");
-const prisma = require("./prisma");
-const {
+import Router from "@koa/router";
+import Boom from "@hapi/boom";
+
+import {
   postBookmarkSchema,
   patchBookmarkSchema,
   validateSchema,
   paramsSchema,
   validateParams,
-} = require("./validation");
-const Boom = require("@hapi/boom");
+} from "./validation";
+import prisma from "./prisma";
 
 const router = new Router();
 
@@ -99,4 +100,4 @@ router.delete("/:id", ...validateBookmarkWithUser, async (ctx) => {
   ctx.status = 204;
 });
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const yup = require("yup");
-const Boom = require("@hapi/boom");
+import yup from "yup";
+import Boom from "@hapi/boom";
 
-const postBookmarkSchema = yup.object().shape({
+export const postBookmarkSchema = yup.object().shape({
   title: yup.string().required(),
   url: yup.string().url().required(),
   tags: yup.array().of(yup.string().required()),
@@ -11,7 +11,7 @@ const postBookmarkSchema = yup.object().shape({
     .transform((v) => (typeof v === "string" && !v.length ? null : v)),
 });
 
-const patchBookmarkSchema = yup.object().shape({
+export const patchBookmarkSchema = yup.object().shape({
   title: yup.string(),
   url: yup.string().url(),
   tags: yup.array().of(yup.string().required()),
@@ -21,11 +21,11 @@ const patchBookmarkSchema = yup.object().shape({
     .transform((v) => (typeof v === "string" && !v.length ? null : v)),
 });
 
-const paramsSchema = yup.object().shape({
+export const paramsSchema = yup.object().shape({
   id: yup.number().integer().required(),
 });
 
-const validateParams = (schema) => async (ctx, next) => {
+export const validateParams = (schema) => async (ctx, next) => {
   try {
     ctx.validatedParams = await schema.validate(ctx.params);
   } catch (error) {
@@ -34,7 +34,7 @@ const validateParams = (schema) => async (ctx, next) => {
   await next();
 };
 
-const validateSchema = (schema) => async (ctx, next) => {
+export const validateSchema = (schema) => async (ctx, next) => {
   try {
     ctx.request.validatedBody = await schema.validate(ctx.request.body, {
       stripUnknown: true,
@@ -43,12 +43,4 @@ const validateSchema = (schema) => async (ctx, next) => {
     throw Boom.badRequest("Validation error.", error);
   }
   await next();
-};
-
-module.exports = {
-  postBookmarkSchema,
-  patchBookmarkSchema,
-  validateSchema,
-  paramsSchema,
-  validateParams,
 };

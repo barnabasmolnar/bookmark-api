@@ -1,6 +1,6 @@
-const Boom = require("@hapi/boom");
+import Boom from "@hapi/boom";
 
-module.exports = async (ctx, next) => {
+export default async (ctx, next) => {
   try {
     await next();
   } catch (error) {

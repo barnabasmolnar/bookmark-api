@@ -2,9 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon --experimental-specifier-resolution=node index.js"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +25,6 @@
   "devDependencies": {
     "nodemon": "^2.0.13",
     "prisma": "^3.2.1"
-  }
+  },
+  "type": "module"
 }

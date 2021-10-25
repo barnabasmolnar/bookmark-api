@@ -1,8 +1,11 @@
-const passport = require("koa-passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const prisma = require("./prisma");
-const Boom = require("@hapi/boom");
-const Router = require("@koa/router");
+import passport from "koa-passport";
+import GoogleOAuth2 from "passport-google-oauth20";
+import Boom from "@hapi/boom";
+import Router from "@koa/router";
+
+import prisma from "./prisma";
+
+const { Strategy: GoogleStrategy } = GoogleOAuth2;
 
 const router = new Router();
 
@@ -53,13 +56,12 @@ router.get("/logout", (ctx) => {
   ctx.status = 200;
 });
 
-module.exports = {
-  isProtected: async (ctx, next) => {
-    if (ctx.isAuthenticated()) {
-      await next();
-    } else {
-      throw Boom.unauthorized("Please log in to continue.");
-    }
-  },
-  authRoutes: router,
+export const isProtected = async (ctx, next) => {
+  if (ctx.isAuthenticated()) {
+    await next();
+  } else {
+    throw Boom.unauthorized("Please log in to continue.");
+  }
 };
+
+export const authRoutes = router;
