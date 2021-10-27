@@ -1,16 +1,14 @@
 import passport from "koa-passport";
-import GoogleOAuth2 from "passport-google-oauth20";
+import googleAuth from "passport-google-oauth20";
 import Boom from "@hapi/boom";
 import Router from "@koa/router";
 
 import prisma from "./prisma";
 
-const { Strategy: GoogleStrategy } = GoogleOAuth2;
-
 const router = new Router();
 
 passport.use(
-  new GoogleStrategy(
+  new googleAuth.Strategy(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,

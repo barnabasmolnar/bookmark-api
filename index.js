@@ -9,7 +9,7 @@ import logger from "koa-logger";
 
 import prisma from "./prisma";
 import { isProtected, authRoutes } from "./auth";
-import bookmarkRoutes from "./bookmarks";
+import bookmarkRoutes from "./bookmarks/bookmarks";
 import errorHandling from "./errors";
 import tagRoutes from "./tags";
 import profileRoutes from "./profile";

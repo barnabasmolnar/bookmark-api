@@ -1,24 +1,23 @@
 import yup from "yup";
 import Boom from "@hapi/boom";
 
+const convertToNullIfEmptyString = yup
+  .string()
+  .nullable()
+  .transform((v) => (typeof v === "string" && !v.length ? null : v));
+
 export const postBookmarkSchema = yup.object().shape({
   title: yup.string().required(),
   url: yup.string().url().required(),
   tags: yup.array().of(yup.string().required()),
-  description: yup
-    .string()
-    .nullable()
-    .transform((v) => (typeof v === "string" && !v.length ? null : v)),
+  description: convertToNullIfEmptyString,
 });
 
 export const patchBookmarkSchema = yup.object().shape({
   title: yup.string(),
   url: yup.string().url(),
   tags: yup.array().of(yup.string().required()),
-  description: yup
-    .string()
-    .nullable()
-    .transform((v) => (typeof v === "string" && !v.length ? null : v)),
+  description: convertToNullIfEmptyString,
 });
 
 export const paramsSchema = yup.object().shape({

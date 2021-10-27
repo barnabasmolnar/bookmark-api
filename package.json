@@ -4,7 +4,11 @@
   "description": "",
   "main": "index",
   "scripts": {
-    "dev": "nodemon --experimental-specifier-resolution=node index.js"
+    "dev": "nodemon --experimental-specifier-resolution=node index.js",
+    "copy-db": "cp prisma/dev.db prisma/dev.test.db",
+    "migrate-test-db": "dotenv -e .env.test -- npx prisma migrate reset --force",
+    "prepare-test-db": "run-s copy-db migrate-test-db",
+    "test": "dotenv -e .env.test -- node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --watchAll"
   },
   "keywords": [],
   "author": "",
@@ -23,8 +27,16 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "dotenv-cli": "^4.0.0",
+    "faker": "^5.5.3",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.13",
+    "npm-run-all": "^4.1.5",
     "prisma": "^3.2.1"
   },
-  "type": "module"
+  "type": "module",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
 }
